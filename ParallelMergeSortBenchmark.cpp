@@ -11,6 +11,7 @@
 
 #include "ParallelMergeSort.h"
 #include "SortParallel.h"
+#include "RadixSortLsdParallel.h"
 
 using std::chrono::duration;
 using std::chrono::duration_cast;
