@@ -25,9 +25,12 @@
 #include "InsertionSort.h"
 #include "BinarySearch.h"
 #include "ParallelMerge.h"
-#include "RadixSortLSD.h"
+// #include "RadixSortLSD.h"
+#include "RadixSortCommon.h"
+#include "InsertionSort.h"
+#include "Histogram.h"
 #include "RadixSortMSD.h"
-#include "RadixSortLsdParallel.h"
+// #include "RadixSortLsdParallel.h"
 #include "RadixSortMsdParallel.h"
 
 // TODO: This extern should not be needed and root-cause needs to be found
