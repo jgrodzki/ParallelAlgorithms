@@ -43,7 +43,7 @@ void verify_sorted(std::vector<uint32_t> &data) {
 }
 
 int main() {
-  const unsigned runs = 5;
+  const unsigned runs = 1;
   const unsigned e = 9;
   std::mt19937_64 dist(1234);
   size_t testSize = 500000000;
@@ -60,7 +60,7 @@ int main() {
       d = static_cast<unsigned>(dist());
     }
     const auto startTime = high_resolution_clock::now();
-    ParallelAlgorithms::SortRadixPar(uints.data(), tmp_working.data(),
+    ParallelAlgorithms::SortRadixPar(uints.data(),
                                      uints.size());
     const auto endTime = high_resolution_clock::now();
     total_time += std::chrono::duration<double, std::chrono::seconds::period>(
