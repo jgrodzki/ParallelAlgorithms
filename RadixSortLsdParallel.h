@@ -111,8 +111,15 @@ namespace ParallelAlgorithms
 		unsigned NumberOfBins = PowerOfTwoRadix;
 
 		//unsigned long** count = HistogramByteComponentsAcrossWorkQuantasQC<PowerOfTwoRadix, Log2ofPowerOfTwoRadix>(inArray, 0, size - 1, workQuanta, quanta, digit);
+		const auto startTime1 = high_resolution_clock::now();
 		size_t** count = ParallelAlgorithms::HistogramByteComponentsQCPar<PowerOfTwoRadix, Log2ofPowerOfTwoRadix>(inArray, 0, size - 1, workQuanta, numberOfQuantas, digit, parallelThreshold);
+		const auto endTime1 = high_resolution_clock::now();
+		printf("COUNT: %.3e\n",
+    std::chrono::duration<double, std::chrono::seconds::period>(
+                    endTime1 - startTime1)
+                    .count());
 
+		const auto startTime2 = high_resolution_clock::now();
 		parallelThreshold = 0;
 
 		size_t** startOfBin = new size_t * [numberOfQuantas];     // start of bin for each parallel work item
@@ -161,6 +168,11 @@ namespace ParallelAlgorithms
 
 		delete[] sizeOfBin;
 
+		const auto endTime2 = high_resolution_clock::now();
+		printf("ACC: %.3e\n",
+    std::chrono::duration<double, std::chrono::seconds::period>(
+                    endTime2 - startTime2)
+                    .count());
 		return startOfBin;
 	}
 
@@ -172,7 +184,7 @@ namespace ParallelAlgorithms
 		unsigned bitMask, unsigned shiftRightAmount, size_t** bufferIndex, unsigned** bufferDerandomize, size_t* bufferIndexEnd, size_t BufferDepth)
 	{
 		size_t* startOfBinLoc = startOfBin[q];
-#if 1
+#if 0
 		const size_t NumberOfBins = PowerOfTwoRadix;
 
 		size_t* bufferIndexLoc = bufferIndex[q];
@@ -284,6 +296,7 @@ namespace ParallelAlgorithms
 #else
 			tbb::task_group g;
 #endif
+			const auto startTime3 = high_resolution_clock::now();
 			//const auto startTime_1 = high_resolution_clock::now();
 			for (q = 0; q < numberOfFullQuantas; q++)
 			{
@@ -304,6 +317,11 @@ namespace ParallelAlgorithms
 					});
 			}
 			g.wait();
+		const auto endTime3 = high_resolution_clock::now();
+		printf("PERMUT: %.3e\n",
+    std::chrono::duration<double, std::chrono::seconds::period>(
+                    endTime3 - startTime3)
+                    .count());
 			//const auto endTime_1 = high_resolution_clock::now();
 			//print_results("Parallel Radix Sort LSD/PermuteDerandomizeNew: ", startTime_1, endTime_1);
 #endif
